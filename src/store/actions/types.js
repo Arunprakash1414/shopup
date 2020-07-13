@@ -1,0 +1,2 @@
+export const SET_BUILDING_TYPES = "SET_BUILDING_TYPES";
+export const MEETING_ROOMS = "MEETING_ROOMS";
