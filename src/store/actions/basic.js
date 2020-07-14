@@ -1,4 +1,4 @@
-import { SET_BUILDING_TYPES } from "./types";
+import { SET_BUILDING_TYPES, MEETING_ROOMS } from "./types";
 
 
 export const setBuildingTypes = () => {
@@ -45,3 +45,12 @@ export const setBuildingTypes = () => {
     }
 }
 
+
+export const getRoomsData = (val) => {
+    return async dispatch => {
+console.log(val)
+        let arr = JSON.parse(localStorage.getItem("meetingrooms"));
+        let result = arr.filter(a => a.building == val);console.log(result)
+        dispatch({ type: MEETING_ROOMS, value: result });
+    }
+}

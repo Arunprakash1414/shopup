@@ -6,19 +6,37 @@ import Header from "./header";
 import Blocks from "./blocks";
 
 class Home extends Component {
-
+    constructor(props) {
+        super(props);
+        this.state = {
+            dropdown: "Building"
+        }
+    }
     componentDidMount() {
         this.props.setBuildingData();
+    }
+    selectDropdown = (data) => {
+        this.setState({ dropdown: data });
+    }
+    redirectPage = () => {
+        this.props.history.push('/meeting/' + this.state.dropdown);
     }
     render() {
         return (
             <div>
-                {this.props.buildings !== undefined ? <Header buildings={this.props.buildings} /> : null}
+                {this.props.buildings !== undefined ? <Header buildings={this.props.buildings}
+                    dropdown={this.state.dropdown}
+                    selectDropdown={this.selectDropdown}
+                    disabled={false}
+                /> : null}
                 <Container style={{ marginTop: "30px" }}>
-                    <Blocks />
-                    <Button variant="success" size="lg" block>
-                        + ADD MEETING
+                    {this.state.dropdown == "Building" ? <h3 style={{ textAlign: "center" }}>Please select the Building Dropdown</h3> :
+                        <div>
+                            <Blocks dropdown={this.state.dropdown} />
+                            <Button variant="success" size="lg" block onClick={this.redirectPage}>
+                                + ADD MEETING
                     </Button>
+                        </div>}
                 </Container>
             </div>
         )
@@ -27,7 +45,6 @@ class Home extends Component {
 
 
 const mapStateToProps = (store) => {
-    console.log(store)
     return {
         buildings: store.home.buildingTypes
     }
